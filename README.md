@@ -23,13 +23,13 @@ Automatic implementations at _.cpp_ files creation giving the matching _.hpp fil
 
 You can execute these commands by acceding to the execute console (cmd + shift + P)
 
-##### Add missing methods
+#### Add missing methods
 
 ![oops something went wrong, try to check on https://raw.githubusercontent.com/ldedier/cpp-skeleton/master/medias/cppGif2.gif](https://raw.githubusercontent.com/ldedier/cpp-skeleton/master/medias/cppGif2.gif)
 
 Checks for methods present in the .hpp file that are not implemented and add them to the current .cpp file
 
- ##### Clear as new skeleton
+ #### Clear as new skeleton
 
 Clear your .cpp file and rebuild the skeleton from the matching .hpp file
 
