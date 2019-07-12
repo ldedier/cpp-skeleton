@@ -1,0 +1,68 @@
+{
+	"name": "cpp-skeleton",
+	"displayName": "cpp-skeleton",
+	"publisher": "ldedier",
+	"description": "automated cpp skeletom from matching hpp file",
+	"version": "0.0.1",
+	"icon": "medias/cpp-skeleton.png",
+	"engines": {
+		"vscode": "^1.27.2"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onLanguage:cpp",
+		"onCommand:cpp-skeleton.clearAsNewSkeleton",
+		"onCommand:cpp-skeleton.addMissingMethods"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "cpp-skeleton.clearAsNewSkeleton",
+				"title": "Clear as new skeleton"
+			},
+			{
+				"command": "cpp-skeleton.addMissingMethods",
+				"title": "Add missing methods"
+			}
+		],
+		"configuration":
+		{
+			"title": "cpp class skeleton configuration",
+			"properties": {
+				"cpp-skeleton.headerCommandId": {
+					"title": "Header command ID",
+					"type": "string",
+					"scope": "window",
+					"description": "The id of the command to execute at the creation of the skeleton (example: 42header.insertHeader). CAREFUL: this will actually EXECUTE the command and unknown commands will result in no skeleton creations! Leave it to blank for no command to execute"
+				},
+				"cpp-skeleton.generateSettersAndGetters": {
+					"title": "Setters and getters Generation",
+					"type": "boolean",
+					"scope": "window",
+					"description": "The skeleton implements the setters and getters when a method start with set, or get"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^5.2.6",
+		"@types/node": "^10.12.21",
+		"@types/vscode": "^1.29.0",
+		"glob": "^7.1.4",
+		"mocha": "^6.1.4",
+		"typescript": "^3.3.1",
+		"tslint": "^5.12.1",
+		"vscode-test": "^1.0.0-next.0"
+	}
+}
