@@ -3,7 +3,7 @@
 	"displayName": "cpp skeleton",
 	"publisher": "ldedier",
 	"description": "automated cpp skeletom from matching hpp file",
-	"version": "0.0.3",
+	"version": "0.1.0",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/ldedier/cpp-skeleton"
