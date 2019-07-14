@@ -1,8 +1,8 @@
 # cpp-skeleton
 ## Features
 
-Automatic implementations at _.cpp_ files creation giving the matching _.hpp files_.
-**the file has to start with an upper-case letter, making it a class .cpp file**
+#### Automatic implementations at _.cpp_ files creation giving the matching _.hpp files_.
+**The file has to start with an upper-case letter, making it a class .cpp file.**
 
 ![oops something went wrong, try to check on https://raw.githubusercontent.com/ldedier/cpp-skeleton/master/medias/cppGif.gif](https://raw.githubusercontent.com/ldedier/cpp-skeleton/master/medias/cppGif.gif)
 
