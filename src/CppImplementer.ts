@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 20:04:15 by ldedier           #+#    #+#             */
-/*   Updated: 2019/08/03 22:33:45 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/10/01 05:12:43 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ class CppImplementer
 		{
 			
 			// const Functionregex = RegExp(/^(\t| )*(static)?(\t| )*(([A-Za-z_:\-~]*)((\t| )*(&|\*))?)(\t| )*(([A-Za-z_0-9<=\+\/\-~]*)\((.*)\).*);$/, 'gm');
-			const Functionregex = RegExp(/^(\t| )*(static)?(\t| )*(const)?(\t| )*(([A-Za-z_:\-~]*)((\t| )*(\&|\*))?)(\t| )*(([A-Za-z_0-9<>!\*=\+\/\-~]*)\((.*)\).*);$/, 'gm');
+			const Functionregex = RegExp(/^(\t| )*(static)?(\t| )*(const)?(\t| )*(([A-Za-z_:\-~]*)((\t| )*(\&|\*))?)(\t| )*(([A-Za-z_0-9\<\>!\*=\+\/\-~]*)\((.*)\).*);$/, 'gm');
 			let array: RegExpExecArray | null;
 			var implementations: CppImplementation[] = [];
 			const className : string = (this.editor.document.fileName.split("/").pop() as string).split(".")[0];
