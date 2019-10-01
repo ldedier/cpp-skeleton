@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 20:04:15 by ldedier           #+#    #+#             */
-/*   Updated: 2019/07/12 20:14:43 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/08/03 22:33:45 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ class CppImplementer
 
 	private  computeImplementation(regexArray: RegExpExecArray, className: string, innerClass: boolean): CppImplementation
 	{
-		var type = regexArray[4];
-		var rhs = regexArray[10];
+		var type = regexArray[6];
+		var rhs = regexArray[12];
 		const stc = regexArray[2];
-		const methodName = regexArray[11];
-		const args = regexArray[12];
+		const methodName = regexArray[13];
+		const args = regexArray[14];
 
 		if (rhs.charAt(0) == '(')
 		{
@@ -88,17 +88,20 @@ class CppImplementer
 		if (decomposer.success)
 		{
 			
-			const Functionregex = RegExp(/^(\t| )*(static)?(\t| )*(([A-Za-z_:\-~]*)((\t| )*(&|\*))?)(\t| )*(([A-Za-z_0-9<=\+\/\-~]*)\((.*)\).*);$/, 'gm');
+			// const Functionregex = RegExp(/^(\t| )*(static)?(\t| )*(([A-Za-z_:\-~]*)((\t| )*(&|\*))?)(\t| )*(([A-Za-z_0-9<=\+\/\-~]*)\((.*)\).*);$/, 'gm');
+			const Functionregex = RegExp(/^(\t| )*(static)?(\t| )*(const)?(\t| )*(([A-Za-z_:\-~]*)((\t| )*(\&|\*))?)(\t| )*(([A-Za-z_0-9<>!\*=\+\/\-~]*)\((.*)\).*);$/, 'gm');
 			let array: RegExpExecArray | null;
 			var implementations: CppImplementation[] = [];
 			const className : string = (this.editor.document.fileName.split("/").pop() as string).split(".")[0];
 			while ((array = Functionregex.exec(decomposer.innerClass)))
 			{
+				console.log(array);
 				let implementation = this.computeImplementation(array, className, true);
 				implementations.push(implementation);
 			}
 			while ((array = Functionregex.exec(decomposer.bottom)))
 			{
+				console.log(array);
 				let implementation = this.computeImplementation(array, className, false);
 				implementations.push(implementation);
 			}

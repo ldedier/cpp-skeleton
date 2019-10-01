@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 20:04:18 by ldedier           #+#    #+#             */
-/*   Updated: 2019/07/12 20:04:35 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/10/01 04:53:28 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ class CppWatcher {
 	}
 
 	private onCreateCpp = (uri: vscode.Uri) => {
+
 		if (vscode.window.activeTextEditor
-			&& vscode.window.activeTextEditor.document.uri.path == uri.path)
+			&& vscode.window.activeTextEditor.document.uri.path == uri.path && vscode.window.activeTextEditor.document.getText().length == 0)
 		{
 			let editor = vscode.window.activeTextEditor as vscode.TextEditor;
 			const matchinHppFileName = vscode.window.activeTextEditor.document.fileName.replace(/\.cpp/, ".hpp");
