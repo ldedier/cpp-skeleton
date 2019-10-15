@@ -33,7 +33,7 @@
 			}
 		],
 		"configuration": {
-			"title": "cpp class skeleton configuration",
+			"title": "Cpp skeleton",
 			"properties": {
 				"cpp-skeleton.headerCommandId": {
 					"title": "Header command ID",

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 20:04:15 by ldedier           #+#    #+#             */
-/*   Updated: 2019/10/01 05:21:56 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/10/16 00:47:20 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,26 @@ class CppImplementer
 
 	private  computeImplementation(regexArray: RegExpExecArray, className: string, innerClass: boolean): CppImplementation
 	{
-		var type = regexArray[6];
-		var rhs = regexArray[12];
+		var type = regexArray[8];
+		var rhs = regexArray[14];
 		const stc = regexArray[2];
-		const methodName = regexArray[13];
-		const args = regexArray[14];
-
+		const cst = regexArray[4];
+		const virtual = regexArray[6];
+		const methodName = regexArray[15];
+		const args = regexArray[16];
+	
+		var isConstructor = false;
 		if (rhs.charAt(0) == '(')
 		{
+			isConstructor = true;
 			rhs = type + rhs;
 			type = "";
 		}
 
 		var prototype: string;
 		var body = "\t";
+		var prefix = regexArray[4] ? regexArray[4] + " " : "";
+
 		// res = (stc ? "/*\n** static method\n*/\n" : "");
 		let arr: RegExpMatchArray | null;
 		if (!stc && innerClass && this.generateSettersAndGetters &&  (arr = methodName.match(new RegExp(/.*get([A-Za-z_0-9\-~].*)/g, ""))))
@@ -76,10 +82,37 @@ class CppImplementer
 			body = "\tthis->_" + arr[1].charAt(0).toLowerCase() + arr[1].slice(1) + " = " + args.split(" ").slice(-1)[0] + ";";
 		const classNamePrefix = (innerClass ? className + "::" : "");
 		if (type)
-			prototype = type + "\t" + classNamePrefix + rhs;
+			prototype = prefix + type + "\t" + classNamePrefix + rhs;
 		else
-			prototype = classNamePrefix + rhs;
-		return (new CppImplementation(prototype, body, methodName, args));
+			prototype = prefix + classNamePrefix + rhs;
+		return (new CppImplementation(prototype, body, methodName, args, isConstructor));
+	}
+
+	private static sortImplementationsArray(implementations: CppImplementation[])
+	{
+		var i;
+		var foundPrevNonConstructor = 1;
+		while (foundPrevNonConstructor)
+		{
+			foundPrevNonConstructor = 0;
+			var foundindex = -1;
+			i = 0;
+			while (i < implementations.length)
+			{
+				if (foundindex != -1 && implementations[i].isConstructor)
+				{
+					foundPrevNonConstructor = 1;
+					var elt : CppImplementation = implementations.splice(i, 1)[0];
+					implementations.splice(foundindex, 0, elt);
+					break;
+				}
+				if (!implementations[i].isConstructor)
+				{
+					foundindex = i;
+				}
+				i++;
+			}
+		}
 	}
 
 	private GetImplementationsArray(): CppImplementation[] | null
@@ -89,22 +122,26 @@ class CppImplementer
 		{
 			
 			// const Functionregex = RegExp(/^(\t| )*(static)?(\t| )*(([A-Za-z_:\-~]*)((\t| )*(&|\*))?)(\t| )*(([A-Za-z_0-9<=\+\/\-~]*)\((.*)\).*);$/, 'gm');
-			const Functionregex = RegExp(/^(\t| )*(static)?(\t| )*(const)?(\t| )*(([A-Za-z_:\-~]*)((\t| )*(\&|\*))?)(\t| )*(([A-Za-z_0-9\<\>!\*=\+\/\-~]*)\((.*)\).*);(\t| )*$/, 'gm');
+			const Functionregex = RegExp(/^(\t| )*(static)?(\t| )*(const)?(\t| )*(virtual)?(\t| )*(([A-Za-z_:\-~]*)((\t| )*(\&|\*))?)(\t| )*(([A-Za-z_0-9\<\>!\*=\+\/\-~]*)\((.*)\)([^=\n])*);(\t| )*$/, 'gm');
 			let array: RegExpExecArray | null;
 			var implementations: CppImplementation[] = [];
 			const className : string = (this.editor.document.fileName.split("/").pop() as string).split(".")[0];
 			while ((array = Functionregex.exec(decomposer.innerClass)))
 			{
-				console.log(array);
+				// console.log(array);
 				let implementation = this.computeImplementation(array, className, true);
 				implementations.push(implementation);
 			}
 			while ((array = Functionregex.exec(decomposer.bottom)))
 			{
-				console.log(array);
+				// console.log(array);
 				let implementation = this.computeImplementation(array, className, false);
 				implementations.push(implementation);
 			}
+
+			console.log(implementations);
+			CppImplementer.sortImplementationsArray(implementations);
+			console.log(implementations);
 			return (implementations);
 		}
 		else

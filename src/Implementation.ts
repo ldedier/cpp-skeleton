@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 20:04:26 by ldedier           #+#    #+#             */
-/*   Updated: 2019/07/12 21:33:43 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/10/16 00:12:29 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,12 @@ class CppImplementation
 	body: string;
 	methodName: string;
 	parameters: string;
+	isConstructor: boolean;
 
-	constructor(prototype: string, body: string, methodName: string, parameters: string)
+
+	constructor(prototype: string, body: string, methodName: string, parameters: string, isConstructor: boolean)
 	{
+		this.isConstructor = isConstructor;
 		this.prototype = prototype;
 		this.body = body;
 		this.methodName = methodName;
