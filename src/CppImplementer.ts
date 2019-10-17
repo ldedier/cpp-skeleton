@@ -6,13 +6,14 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 20:04:15 by ldedier           #+#    #+#             */
-/*   Updated: 2019/10/16 00:47:20 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/10/18 00:55:51 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import * as vscode from 'vscode';
 import HppClassDecomposer from './HppClassDecomposer';
 import CppImplementation from './Implementation';
+import CppWatcher from './CppWatcher';
 
 class CppImplementer
 {
@@ -201,7 +202,7 @@ class CppImplementer
 			&& vscode.window.activeTextEditor.document.fileName.split(".").slice(-1)[0] == "cpp")
 		{
 			let editor = vscode.window.activeTextEditor as vscode.TextEditor;
-			const matchinHppFileName = vscode.window.activeTextEditor.document.fileName.replace(/\.cpp/, ".hpp");
+			const matchinHppFileName : string = <string>CppWatcher.getHppRelativePath();
 			vscode.workspace.openTextDocument(matchinHppFileName).then(
 			(doc) => {
 					const implementer : CppImplementer = new CppImplementer(editor, doc); 
@@ -221,7 +222,9 @@ class CppImplementer
 			&& vscode.window.activeTextEditor.document.fileName.split(".").slice(-1)[0] == "cpp")
 		{
 			let editor = vscode.window.activeTextEditor as vscode.TextEditor;
-			const matchinHppFileName = vscode.window.activeTextEditor.document.fileName.replace(/\.cpp/, ".hpp");
+			
+			const matchinHppFileName : string = <string>CppWatcher.getHppRelativePath();
+
 			vscode.workspace.openTextDocument(matchinHppFileName).then(
 			(doc) => {
 				var firstLine = editor.document.lineAt(0);

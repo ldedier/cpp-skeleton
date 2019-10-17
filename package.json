@@ -3,7 +3,7 @@
 	"displayName": "cpp skeleton",
 	"publisher": "ldedier",
 	"description": "Automated cpp skeleton from matching .hpp file",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/ldedier/cpp-skeleton"
@@ -46,6 +46,13 @@
 					"type": "boolean",
 					"scope": "window",
 					"description": "The skeleton implements the setters and getters when a method start with set, or get"
+				},
+				"cpp-skeleton.matchingHppPath": {
+					"title": "relative path of the matching hpp file",
+					"type": "string",
+					"scope": "window",
+					"default": ".",
+					"description": "The relative path of the matching hpp file : ex \".\" or \"../includes\""
 				}
 			}
 		}
@@ -69,6 +76,7 @@
 		"vscode-test": "^1.0.0-next.0"
 	},
 	"dependencies": {
-		"lodash": "^4.17.14"
+		"lodash": "^4.17.14",
+		"path": "^0.12.7"
 	}
 }
