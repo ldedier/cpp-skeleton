@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+import * as path from 'path';
 import * as vscode from 'vscode';
 import HppClassDecomposer from './HppClassDecomposer';
 import CppImplementation from './Implementation';
@@ -41,7 +42,7 @@ class CppImplementer
 				const pos: vscode.Position = this.editor.selection.active;
 				edit.insert(pos,
 					[
-						"#include \""+ this.hppDoc.fileName.split("/").pop() as string +"\"",
+						"#include \""+ this.hppDoc.fileName.split(path.sep).pop() as string +"\"",
 						(<CppImplementation[]> ImplementationsArray).map(
 							implementation => implementation.implements()).join("\n\n")
 					].join("\n\n"));
@@ -126,7 +127,7 @@ class CppImplementer
 			const Functionregex = RegExp(/^(\t| )*(static)?(\t| )*(const)?(\t| )*(virtual)?(\t| )*(([A-Za-z_:\-~]*)((\t| )*(\&|\*))?)(\t| )*(([A-Za-z_0-9\<\>!\*=\+\/\-~]*)\((.*)\)([^=\n])*);(\t| )*$/, 'gm');
 			let array: RegExpExecArray | null;
 			var implementations: CppImplementation[] = [];
-			const className : string = (this.editor.document.fileName.split("/").pop() as string).split(".")[0];
+			const className : string = (this.editor.document.fileName.split(path.sep).pop() as string).split(".")[0];
 			while ((array = Functionregex.exec(decomposer.innerClass)))
 			{
 				// console.log(array);
