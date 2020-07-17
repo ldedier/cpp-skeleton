@@ -76,7 +76,7 @@
 		"vscode-test": "^1.0.0-next.0"
 	},
 	"dependencies": {
-		"lodash": "^4.17.14",
+		"lodash": "^4.17.19",
 		"path": "^0.12.7"
 	}
 }
